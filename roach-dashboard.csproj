@@ -7,4 +7,8 @@
     <RootNamespace>roach_dashboard</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CameraControl.Devices" Version="2.1.0-beta" />
+  </ItemGroup>
+
 </Project>
