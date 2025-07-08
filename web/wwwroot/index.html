@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>web</title>
+    <base href="/" />
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="web.styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script> MyDOMGetBoundingClientRect = (element, parm) => { return element.getBoundingClientRect(); }; </script>
+    <script> 
+    window.canvasInterop = { 
+		setupCanvas: function () { 
+			var canvas = document.getElementById("myCanvas"); 
+            var context = canvas.getContext("2d"); 
+            // Perform various operations on the canvas using the context object 
+            // Example: Draw a rectangle 
+            context.fillStyle = "red"; 
+            context.fillRect(10, 10, 100, 100); 
+        },
+        drawLine: function (startX, startY, endX, endY) {
+            var canvas = document.getElementById("myCanvas");
+            var context = canvas.getContext("2d");
+            context.beginPath();
+            context.moveTo(startX, startY);
+            context.lineTo(endX, endY);
+            context.stroke();
+        },
+        clearCanvas: function () {
+            var canvas = document.getElementById("myCanvas");
+            var context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        },
+    };
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+<h1>Canvas Demo</h1>
+<canvas id="myCanvas" @onclick="OnCanvasClick" @onmousedown="OnCanvasMouseDown" style="border: solid;"
+    @ref="_canvas"></canvas>
+
+@code {
+    private ElementReference _canvas;
+    private (double?, double?) lineStart = (null, null);
+
+    public class BoundingClientRect
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public double Top { get; set; }
+        public double Right { get; set; }
+        public double Bottom { get; set; }
+        public double Left { get; set; }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("canvasInterop.setupCanvas");
+        }
+    }
+
+    private async void OnCanvasClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs e)
+    {
+        // Get the offset of the canvas element
+        var result = await JSRuntime.InvokeAsync<BoundingClientRect>("MyDOMGetBoundingClientRect", _canvas);
+        double x = e.ClientX - result.Left;
+        double y = e.ClientY - result.Top;
+
+        Console.WriteLine($"Canvas clicked at: {x}, {y}");
+        if (lineStart.Item1 != null && lineStart.Item2 != null)
+        {
+            // Draw a line from the starting point to the clicked point
+            await JSRuntime.InvokeVoidAsync("canvasInterop.drawLine", lineStart.Item1, lineStart.Item2, x, y);
+            // Reset the line start
+            lineStart = (null, null);
+        }
+
+    }
+
+    private async void OnCanvasMouseDown(Microsoft.AspNetCore.Components.Web.MouseEventArgs e)
+    {
+        // Get the offset of the canvas element
+        var result = await JSRuntime.InvokeAsync<BoundingClientRect>("MyDOMGetBoundingClientRect", _canvas);
+        double x = e.ClientX - result.Left;
+        double y = e.ClientY - result.Top;
+
+        Console.WriteLine($"Mouse down at: {x}, {y}");
+        lineStart = (x, y);
+    }
+}
