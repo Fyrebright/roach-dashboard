@@ -28,32 +28,42 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script> MyDOMGetBoundingClientRect = (element, parm) => { return element.getBoundingClientRect(); }; </script>
-    <script> 
-    window.canvasInterop = { 
-		setupCanvas: function () { 
-			var canvas = document.getElementById("myCanvas"); 
-            var context = canvas.getContext("2d"); 
-            // Perform various operations on the canvas using the context object 
-            // Example: Draw a rectangle 
-            context.fillStyle = "red"; 
-            context.fillRect(10, 10, 100, 100); 
-        },
-        drawLine: function (startX, startY, endX, endY) {
-            var canvas = document.getElementById("myCanvas");
-            var context = canvas.getContext("2d");
-            context.beginPath();
-            context.moveTo(startX, startY);
-            context.lineTo(endX, endY);
-            context.stroke();
-        },
-        clearCanvas: function () {
-            var canvas = document.getElementById("myCanvas");
-            var context = canvas.getContext("2d");
-            context.clearRect(0, 0, canvas.width, canvas.height);
-        },
-    };
-</script>
+    <script>
+        window.canvasInterop = {
+            setupCanvas: function () {
+                var canvas = document.getElementById("myCanvas");
+                var context = canvas.getContext("2d");
+            },
+            drawLine: function (startX, startY, endX, endY) {
+                var canvas = document.getElementById("myCanvas");
+                var context = canvas.getContext("2d");
+                context.beginPath();
+                context.moveTo(startX, startY);
+                context.lineTo(endX, endY);
+                context.stroke();
+            },
+            clearCanvas: function () {
+                var canvas = document.getElementById("myCanvas");
+                var context = canvas.getContext("2d");
+                context.clearRect(0, 0, canvas.width, canvas.height);
+            },
+            drawImageStream: function () {
+                var img = document.getElementById("img");
 
+                var stream = document.getElementById("stream");
+
+                var canvas = document.getElementById("stream");
+                // create a *new* 2DContext
+                var ctx_off = stream.cloneNode().getContext('2d');
+                ctx_off.drawImage(img, 0,0);
+                // and draw it back to our visible one
+                ctx_stream.drawImage(ctx_off.canvas, 0,0);
+                
+                // draw the img directly on 'direct'
+                ctx_direct.drawImage(img, 0,0);
+            }
+        };
+    </script>
 </body>
 
 </html>

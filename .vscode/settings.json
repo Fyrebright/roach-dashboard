@@ -1,3 +1,5 @@
 {
-    "dotnet.defaultSolution": "RoachDash.sln"
+    "dotnet.defaultSolution": "RoachDash.sln",
+    "cmake.sourceDirectory": "/mnt/Data/Source/roach-dashboard/rpi-control/instruction-router",
+    "editor.wordWrap": "on"
 }

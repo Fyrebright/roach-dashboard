@@ -1,12 +1,15 @@
 ﻿@page "/"
 @inject IJSRuntime JSRuntime
+
 <h1>Canvas Demo</h1>
-<canvas id="myCanvas" @onclick="OnCanvasClick" @onmousedown="OnCanvasMouseDown" style="border: solid;"
-    @ref="_canvas"></canvas>
+
+<canvas id="myCanvas" width="640" height="480" @onclick="OnCanvasClick" @onmousedown="OnCanvasMouseDown" @ref="_canvas"></canvas>
+
 
 @code {
     private ElementReference _canvas;
     private (double?, double?) lineStart = (null, null);
+
 
     public class BoundingClientRect
     {
